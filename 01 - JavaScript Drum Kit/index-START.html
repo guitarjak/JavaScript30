@@ -8,7 +8,14 @@
 </head>
 <body>
 
-
+  <div>
+    <p style="font-size: 60px; color:white; text-align: center;">
+      The Javascript Drum Project
+    </p>
+    <p>
+      Currently PC version only
+    </p>
+  </div>
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -22,6 +29,7 @@
       <kbd>D</kbd>
       <span class="sound">kick</span>
     </div>
+  
     <div data-key="70" class="key">
       <kbd>F</kbd>
       <span class="sound">openhat</span>
@@ -59,6 +67,37 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+
+
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // 
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if (!audio) return; // stop the function
+  audio.currentTime = 0; // rewind to start when function is called again
+  audio.play();
+  key.classList.add('playing');
+}
+
+ function removeTransition(e) {
+  window.addEventListener('keyup', function(e) {
+  const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`);
+  key.classList.remove('playing');
+  }); 
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+
+/* What I learned today
+1. Javascript can play sound!
+2. How to target DOM using JS
+3. How to add and remove class using JS
+
+Things to research more on
+1.data-key -> what is it? how to use it?
+2. "this" -> what is it? how to use it?
+*/
 
 </script>
 
